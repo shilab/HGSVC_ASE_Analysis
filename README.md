@@ -5,12 +5,10 @@ README:
 Jia Wen, Conor Nodzak, Xinghua Mindy Shi 
 If you have any question, please contact jwen6@uncc.edu, cnodzak@uncc.edu, X.Shi@uncc.edu
 
-This directory includes results from SNP ASE analysis using strand-specific RNA-seq data and Whatshap strand-seq 10X phased SNPs as seen below (See below for SV ASE analysis):
-
+This repository includes results from SNP ASE analysis using strand-specific RNA-seq data and Whatshap strand-seq 10X phased SNPs nad SV ASE analysis as seen below:
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20160704_whatshap_strandseq_10X_phased_SNPs/
 
 The index file of FASTQ files for strand-specific RNA-seq data of the 3 trios is located at:
-
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/illumina_rna.sequence.index
 
 
