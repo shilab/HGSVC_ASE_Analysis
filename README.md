@@ -33,9 +33,9 @@ ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_ge
 
 > command line: samtools merge $indv.merged.bam $indv.keep.bam $indv_corrected.remap.keep.bam
 
-
+```
 3. Corrected bam files are sorted by Samtools and duplicate reads are then discarded using Picard.
-
+```
 > command line: java -jar picard.jar MarkDuplicates INPUT=$dir/$indv.merged.sorted.bam OUTPUT=$dir/$indv.Picard.bam METRICS_FILE=$indv.Picard.txt REMOVE_DUPLICATES=true VALIDATION_STRINGENCY=LENIENT
 ```
 
