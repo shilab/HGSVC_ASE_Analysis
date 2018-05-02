@@ -5,10 +5,10 @@ Jia Wen, Conor Nodzak, Xinghua Mindy Shi
 
 If you have any question, please contact jwen6@uncc.edu, cnodzak@uncc.edu, X.Shi@uncc.edu
 
-This repository includes results from SNP ASE analysis using strand-specific RNA-seq data and Whatshap strand-seq 10X phased SNPs nad SV ASE analysis as seen below:
+This repository includes results from SNP ASE analysis using strand-specific RNA-seq data and Whatshap strand-seq 10X phased SNPs nad SV ASE analysis as seen in below link:
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20160704_whatshap_strandseq_10X_phased_SNPs/
 
-The index file of FASTQ files for strand-specific RNA-seq data of the 3 trios is located at:
+The index file of FASTQ files for strand-specific RNA-seq data of the 3 trios is located at the link:
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/illumina_rna.sequence.index
 
 
@@ -75,13 +75,13 @@ Perl script samase.pl used for generating reference and alternative read counts 
 Then intersect the heterozygous SV from PacBio callset for 3 children in trios with ASE genes. All the PacBio SV callset can be accessed in below link:
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/
 
-We now begin a description of the SV-ASE analysis and results found in Table 5. SV-ASE.results.xlsx in the ftp: http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios.
+We now begin a description of the SV-ASE analysis and results found in Table 5. SV-ASE.results.xlsx in the link: http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios.
 
-The VCFs for Integrated Illumina SVs and Merged PacBio SVs were collected from the following: 
+The VCFs for Integrated Illumina SVs and Merged PacBio SVs were collected from the following links: 
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/integration/20170206_Illumina_Integrate/
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/
 
-The phased RNA-seq reads were gathered from: 
+The phased RNA-seq reads were gathered from the link: 
 http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA/
 
 1. The Integrated Illumina VCF file was parsed to yield files of heterozygous SVs with a 'pass' value in the filter column, for each trio daughter.
@@ -97,7 +97,6 @@ Demerger.py is a simple Python script to parse information from each sample's VC
 ```
 
 2. The heterozygous SVs from the Merged PacBio calls were extracted and formatted in a similar manner.
-#
 ```
 > command line: python PBSV.adjust.py 20170109_”$sample”.sv_calls.vcf  ## yields file called 20170109.”$sample".sv_calls_PBSV.bed
 ```
