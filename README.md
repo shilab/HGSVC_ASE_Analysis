@@ -1,5 +1,4 @@
-# SV-ASE-analysis
-README:
+#HGSVC_ASE_Analysis
 
 04/2018
 Jia Wen, Conor Nodzak, Xinghua Mindy Shi 
@@ -12,7 +11,7 @@ The index file of FASTQ files for strand-specific RNA-seq data of the 3 trios is
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/illumina_rna.sequence.index
 
 
-We use a SNP ASE analysis pipeline based on mapping bias correction by WASP (Van de Geijn B et al. WASP: allele-specific software for robust discovery of molecular quantitative trait loci. bioRxiv (2014): 011221). The specific steps of this pipeline are as follows:
+We use a SNP ASE analysis pipeline based on mapping bias correction by WASP (Van de Geijn B et al. WASP: allele-specific software for robust discovery of molecular quantitative trait loci. bioRxiv (2014): 011221). The specific steps of this pipeline are as follows and results can be found in http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios:
 
 1. Map RNA-seq reads to the human reference GRCH38 using STAR v2.4.2a with default option. The reference we used here is from the link:
 
@@ -65,70 +64,11 @@ Perl script samase.pl used for generating reference and alternative read counts 
 
 > command line: bedtools intersect -a $indv_het.ase.txt -b gene_anno.bed -wa -wb > $indv.inter
 
-This directory includes three tables. Table 1 includes all significant ASE SNPs, corresponding overlapped genes. Table 2 includes the number of ASE SNP, ASE gene and test in our ASE analysis for trios.  
-
-The columns listed in TTable 1. ASE_SNP_RES_Trios.xlsx are detailed as below,
-
-Column 1: Individual ID;
-Column 2: Chromosome;
-Column 3: Position of ASE SNP;
-Column 4: P-value from binomial test;
-Column 5: Qvalue from multi-test correction, all ASE SNPs are sorted by q-values for each individual;
-Column 6: The reference allele/alternate allele for SNP site;
-Column 7 - 8: Allele counts of reference allele and alternative allele;
-Column 9: Total reads counts for each SNP site;
-Column 10: Denote the alleles seen from RNA-seq reads for each SNP site;
-Column 11: Gene symbol that intersect with ASE SNPs;
-Column 12 - 13: Gene coordinate;
-Column 14: Gene strand;
-Column 15: Ensemble ID of gene.
-
-Note that in Table 1, for each individual, the ASE SNPs are sorted by q-values. For those cases where gene information is NA, it indicates that the above SNPs don't intersect with protein coding gene.
-
-The columns listed in Table 2. Summary of ASE_RES_Trios.xlsx are detailed as below,
-
-Column 1: Individual ID;
-Column 2: Number of significant ASE SNPs;
-Column 3: Number of genes overlapped with significant ASE SNPs;
-Column 4: Number of total tests performed in ASE analysis for each individual.
-
-
-We intersect the heterozygous SV from PacBio callset for 3 children in trios with ASE genes. All the PacBio SV callset can be accessed in below link:
+Then intersect the heterozygous SV from PacBio callset for 3 children in trios with ASE genes. All the PacBio SV callset can be accessed in below link:
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/
 
-Table 3. Pacbio_SV_ASE_gene_Trios.xlsx includes all heterozygous PacBio SV overlapped with ASE genes for trios, and the results of three children are listed in three spreadsheets. The columns listed in Table 3 are detailed as below,
 
-Column 1: SV Chromosome;
-Column 2-3: het-SV coordinate;
-Column 4: SV type;
-Column 5: SV genotype;
-Column 6 - 7: Gene coordinate;
-Column 8: Gene strand;
-Column 9: Ensemble ID of gene;
-Column 10: The gene symbol that intersect with het-SV.
-
-
-We annotate the Illumina integrated INDEL from Ye Kai's group, the genotype of Illumina integrated INDEL callset can be accessed in below link:
-ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/integration/20170515_Integrated_indels_Illumina_PacBio/Illumina_Indels_Merged_20170515.vcf.gz
-
-Table 4. ANNO_INDEL_Trios.xlsx provides the INDEL annotation result from variant effect prediction (VEP). The columns listed in Table 3 are detailed as below,
-Column 1: Chromosome;
-Column 2-3: INDEL coordinate;
-Column 4: Reference sequence of INDEL;
-Column 5: Alternative sequence of INDEL;
-Column 6: Consequences of each INDEL on the protein sequence;
-Column 7: Gene symbol that intersect with INDEL;
-Column 8: Ensemble ID of gene;
-Column 9: Transcript ID of gene;
-Column 10: Transcript chromosome;
-Column 11 - 12: Transcript coordinate;
-Column 13: Length of transcript;
-Column 14: Transcript biotype;
-Column 15 - 16: The exon or intron number that each INDEL falls in as NUMBER/TOTAL, i.e. exon 7/14 means the INDEL falls in the 7th of 14 exons in the transcript ENST00000342066;
-Column 17: Type of INDEL.
-
-
-We now begin a description of the SV-ASE analysis and results found in Table 5. SV-ASE.results.xlsx.
+We now begin a description of the SV-ASE analysis and results found in Table 5. SV-ASE.results.xlsx in the ftp: http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios.
 
 The VCFs for Integrated Illumina SVs and Merged PacBio SVs were collected from the following: 
 http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/integration/20170206_Illumina_Integrate/
@@ -141,11 +81,10 @@ http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA
 
 > command line: grep 'PASS' ALL_Illumina_Integrate_20170206.vcf | grep -e '<DEL>' -e '<INS>' -  > PASS_Illumina_Integrate_20170206.DELINS.vcf
 
+# Demerger.py is a simple Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
 > command line: python Demerger.py PASS_Illumina_Integrate_20170206.DELINS.vcf > PASS.Illumina.DELINS_integrate.bed
-					# Demerger.py is a simple Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
 
 > command line: sort -k1,1V -k2,2n  PASS.Illumina.DELINS_integrate.bed | uniq | awk '$9 == "0/1"' - | awk '{ $3 = ( $5 == "<INS>" ? $2+1 : $3) } 1' - | sed 's/\s/\t/g' - | grep -e "$sample" - > "$sample".PASS.Illumina.DELINS_heterozygous.bed
-
 
 
 2. The heterozygous SVs from the Merged PacBio calls were extracted and formatted in a similar manner.
@@ -184,24 +123,3 @@ http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA
 7. Multi-test correction was applied with p.adjust() in R.
 
 8. Output significant SVs exhibit an ASE affect with FDR adjusted p-value <= 0.05.
-
-Table 5: SV-ASE.results.xlsx provides the significant SV-intersected ASE-SNP genes that showed an allele specific effect for IL-SVs and PB-SVs.
-COLUMN 1: gene chromosome
-COLUMN 2: gene start position
-COLUMN 3: gene stop position
-COLUMN 4: Ensemble ID of gene
-COLUMN 5: gene symbol
-COLUMN 6: sv chromosome
-COLUMN 7: sv start position
-COLUMN 8: sv end postion
-COLUMN 9: reference allele
-COLUMN 10: alternate allele (given as sv type)
-COLUMN 11: quality score 
-COLUMN 12: filter value
-COLUMN 13: SV genotype
-COLUMN 14: haplotype 1 RNA-seq read counts
-COLUMN 15: haplotype 2 RNA-seq read counts
-COLUMN 16: Read count ratio between haplotypes, as min(hap1,hap2)/max(hap1,hap2).
-COLUMN 17: Read count total for both haplotype 1 and haplotype 2.
-COLUMN 18: p-value result from binomial test.
-COLUMN 19: FDR corrected p-value.
