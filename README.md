@@ -17,9 +17,9 @@ We use a SNP ASE analysis pipeline based on mapping bias correction by WASP (Van
 
 ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
 
-
+```
    > command line: STAR --genomeDir ./genomedir --readFilesIn $indv_1.fastq $indv_2.fastq --runThreadN 4 --genomeLoad LoadAndKeep --   outFileNamePrefix $indv. --outFilterScoreMin 0 --outFilterScoreMinOverLread 0 --outFilterMatchNmin 0 --outFilterMatchNminOverLread 0
-
+```
 
 
 2. The bam files output by STAR are corrected of mapping bias using WASP. The procedure involves remapping bam files that overlap with all SNPs, and discarding those reads that can’t be mapped to the same location with reference allele after flipped to alternative allele.
