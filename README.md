@@ -89,7 +89,7 @@ http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA
 ```
 > command line: grep 'PASS' ALL_Illumina_Integrate_20170206.vcf | grep -e '<DEL>' -e '<INS>' -  > PASS_Illumina_Integrate_20170206.DELINS.vcf
 ```
-  #Demerger.py is a simple Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
+Demerger.py is a simple Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
 ```
 > command line: python Demerger.py PASS_Illumina_Integrate_20170206.DELINS.vcf > PASS.Illumina.DELINS_integrate.bed
 
@@ -97,12 +97,14 @@ http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA
 ```
 
 2. The heterozygous SVs from the Merged PacBio calls were extracted and formatted in a similar manner.
+#
 ```
 > command line: python PBSV.adjust.py 20170109_”$sample”.sv_calls.vcf  ## yields file called 20170109.”$sample".sv_calls_PBSV.bed
-						#where PB.adjust.py is a Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
-
-> command line: grep -v '1|1' 20170109."$sample".sv_calls_PBSV.bed | awk '{ $3 = ( $5 == "<INS>" ? $2+1 : $3) } 1' - | sed 's/\s/\t/g' - > "$sample".hetsv_calls_PBSV.bed
-```				
+```
+where PB.adjust.py is a Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
+```
+> command line: grep -v '1|1' 20170109."$sample".sv_calls_PBSV.bed | awk '{ $3 = ( $5 == "<INS>" ? $2+1 : $3) } 1' - | sed 's/\s/\t/g' - > "$sample".hetsv_calls_PBSV.bed```		
+```
 3. Heterozygous SVs for each daughter were intersected with the SNP-ASE genes (genes identified by methods described above) to identify sets of SV-impacted genes to test for allele specific expression. The files “$sample".uniq.ASESNP.genes.txt contains the coordinates, gene IDs and gene names for ASE-SNP genes per sample identified by the SNP-ASE analysis above.
 ```
 > command line: bedtools intersect -wa -wb -a “$sample".uniq.ASESNP.genes.txt  -b “$sample”.PASS.Illumina.DELINS_heterozygous.bed > $sample.intersect.hetILL.ASESNP.genes.txt
