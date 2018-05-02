@@ -2,6 +2,7 @@
 
 04/2018
 Jia Wen, Conor Nodzak, Xinghua Mindy Shi 
+
 If you have any question, please contact jwen6@uncc.edu, cnodzak@uncc.edu, X.Shi@uncc.edu
 
 This repository includes results from SNP ASE analysis using strand-specific RNA-seq data and Whatshap strand-seq 10X phased SNPs nad SV ASE analysis as seen below:
