@@ -6,17 +6,17 @@ Jia Wen, Conor Nodzak, Xinghua Mindy Shi
 If you have any question, please contact jwen6@uncc.edu, cnodzak@uncc.edu, X.Shi@uncc.edu
 
 This repository includes results from SNP ASE analysis using strand-specific RNA-seq data and Whatshap strand-seq 10X phased SNPs nad SV ASE analysis as seen below:
-http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20160704_whatshap_strandseq_10X_phased_SNPs/
+(http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20160704_whatshap_strandseq_10X_phased_SNPs/)
 
 The index file of FASTQ files for strand-specific RNA-seq data of the 3 trios is located at:
-http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/illumina_rna.sequence.index
+(http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/illumina_rna.sequence.index)
 
 
-We use a SNP ASE analysis pipeline based on mapping bias correction by WASP (Van de Geijn B et al. WASP: allele-specific software for robust discovery of molecular quantitative trait loci. bioRxiv (2014): 011221). The specific steps of this pipeline are as follows and results can be found in http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios:
+We use a SNP ASE analysis pipeline based on mapping bias correction by WASP (Van de Geijn B et al. WASP: allele-specific software for robust discovery of molecular quantitative trait loci. bioRxiv (2014): 011221). The specific steps of this pipeline are as follows and results can be found in (http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios):
 
 1. Map RNA-seq reads to the human reference GRCH38 using STAR v2.4.2a with default option. The reference we used here is from the link:
 
-ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
+(ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa)
 
 ```
    > command line: STAR --genomeDir ./genomedir --readFilesIn $indv_1.fastq $indv_2.fastq --runThreadN 4 --genomeLoad LoadAndKeep --   outFileNamePrefix $indv. --outFilterScoreMin 0 --outFilterScoreMinOverLread 0 --outFilterMatchNmin 0 --outFilterMatchNminOverLread 0
@@ -59,31 +59,30 @@ ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_ge
 ```
 > command line: perl ./samase.pl -parse_pileup --sp $indv.pileup.txt --vcf $dir_snps/$indv/$indv_all_bisnp >  $indv.parsed_pileup.txt
 > command line: perl ./samase.pl --calculate_ase_normal --pp $indv.parsed_pileup.txt -is $dir_snps/$indv/$indv_all_bisnp -r 0.5 -gf $indv.gene_snp_mapping_file.txt -mrs 8 -bq 10 > $indv_het.ase.txt
-
-Perl script samase.pl used for generating reference and alternative read counts is from Kukurba et al. Allelic expression of deleterious protein-coding variants across human tissues. PLoS Genet 10.5 (2014): e1004304.
 ```
+Perl script samase.pl used for generating reference and alternative read counts is from Kukurba et al. Allelic expression of deleterious protein-coding variants across human tissues. PLoS Genet 10.5 (2014): e1004304.
+
 8. Finally, we conduct multi-test correction with Qvalue package in R.
 
 9. Output significant ASE SNPs with qvalue < 0.05.
 
-10. Bedtools is used to intersect genes with significant ASE SNPs (1bp overlap). The gene annotation file (Gencode v25) is downloaded from ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_25/gencode.v25.annotation.gtf.gz. 
+10. Bedtools is used to intersect genes with significant ASE SNPs (1bp overlap). The gene annotation file (Gencode v25) is downloaded from (ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_25/gencode.v25.annotation.gtf.gz). 
 
 ```
 > command line: bedtools intersect -a $indv_het.ase.txt -b gene_anno.bed -wa -wb > $indv.inter
 ```
 
 Then intersect the heterozygous SV from PacBio callset for 3 children in trios with ASE genes. All the PacBio SV callset can be accessed in below link:
-http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/
+(http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/)
 
-
-We now begin a description of the SV-ASE analysis and results found in Table 5. SV-ASE.results.xlsx in the ftp: http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios.
+We now begin a description of the SV-ASE analysis and results found in Table 5. SV-ASE.results.xlsx in the ftp: (http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/201707_ASE_RES_Trios).
 
 The VCFs for Integrated Illumina SVs and Merged PacBio SVs were collected from the following: 
-http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/integration/20170206_Illumina_Integrate/
-http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/
+(http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/integration/20170206_Illumina_Integrate/)
+(http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20170109_UW_MSSM_Merged_PacBio/)
 
 The phased RNA-seq reads were gathered from: 
-http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA/
+(http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA/)
 
 1. The Integrated Illumina VCF file was parsed to yield files of heterozygous SVs with a 'pass' value in the filter column, for each trio daughter.
 
