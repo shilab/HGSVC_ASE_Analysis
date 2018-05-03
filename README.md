@@ -114,10 +114,10 @@ where PB.adjust.py is a Python script to parse information from each sample's VC
 > command line: java -jar picard.jar MarkDuplicates INPUT="$sample".sort.h1.bam OUTPUT="$sample".filt.h1.bam M="$file".marked_dup_metrics.txt REMOVE_DUPLICATES=true VALIDATION_STRINGENCY=LENIENT
 ```
 
-5. Phased RNA-seq reads are counted across coordinate regions of SNP-ASE genes that are intersected by heterozygous SVs using BEDtools multicov. This produces a count for each bam file, where “$sample”.filt.head.h2.bam and “$sample”.filt.head.h2.bam are the bam files for filtered RNA-seq reads phased to haplotype 1 or haplotype 2 for each daughter sample. 
+5. Phased RNA-seq reads are counted across coordinate regions of SNP-ASE genes that are intersected by heterozygous SVs using BEDtools multicov. This produces a count for each bam file, where "$sample".filt.head.h2.bam and "$sample".filt.head.h2.bam are the bam files for filtered RNA-seq reads phased to haplotype 1 or haplotype 2 for each daughter sample. 
 ```
-> command line: bedtools multicov -bams “$sample”.filt.head.h1.bam “$sample”.filt.head.h2.bam  -bed “$sample”.intersect.hetILL.ASESNP.genes.txt > “$sample”.illumina.multicov.txt
-> command line: bedtools multicov -bams “$sample”.filt.head.h1.bam “$sample”.filt.head.h2.bam  -bed $sample.intersect.hetPBSV.ASESNP.genes.txt > “$sample”.PBSV.multicov.txt
+> command line: bedtools multicov -bams "$sample".filt.head.h1.bam "$sample".filt.head.h2.bam  -bed "$sample".intersect.hetILL.ASESNP.genes.txt > "$sample".illumina.multicov.txt
+> command line: bedtools multicov -bams "$sample".filt.head.h1.bam "$sample".filt.head.h2.bam  -bed "$sample".intersect.hetPBSV.ASESNP.genes.txt > "$sample".PBSV.multicov.txt
 ```
 
 6. A binomial test is then applied using binom.test() in R. 
