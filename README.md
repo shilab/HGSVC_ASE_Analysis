@@ -84,53 +84,48 @@ http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/wor
 The phased RNA-seq reads were gathered from the link: 
 http:ftp://ftp-exchange.embl-heidelberg.de/pub/exchange/rausch/outgoing/haploRNA/
 
-1. The Integrated Illumina VCF file was parsed to yield files of heterozygous SVs with a 'pass' value in the filter column, for each trio daughter.
-
+1. The Integrated Illumina VCF file is parsed to yield files of heterozygous SVs with a 'pass' value in the filter column, for each trio daughter.
 ```
 > command line: grep 'PASS' ALL_Illumina_Integrate_20170206.vcf | grep -e '<DEL>' -e '<INS>' -  > PASS_Illumina_Integrate_20170206.DELINS.vcf
 ```
 Demerger.py is a simple Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
 ```
 > command line: python Demerger.py PASS_Illumina_Integrate_20170206.DELINS.vcf > PASS.Illumina.DELINS_integrate.bed
-
 > command line: sort -k1,1V -k2,2n  PASS.Illumina.DELINS_integrate.bed | uniq | awk '$9 == "0/1"' - | awk '{ $3 = ( $5 == "<INS>" ? $2+1 : $3) } 1' - | sed 's/\s/\t/g' - | grep -e "$sample" - > "$sample".PASS.Illumina.DELINS_heterozygous.bed
 ```
 
-2. The heterozygous SVs from the Merged PacBio calls were extracted and formatted in a similar manner.
+2. The heterozygous SVs from the Merged PacBio calls are extracted and formatted in a similar manner.
 ```
 > command line: python PBSV.adjust.py 20170109_”$sample”.sv_calls.vcf  ## yields file called 20170109.”$sample".sv_calls_PBSV.bed
 ```
 where PB.adjust.py is a Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
 ```
-> command line: grep -v '1|1' 20170109."$sample".sv_calls_PBSV.bed | awk '{ $3 = ( $5 == "<INS>" ? $2+1 : $3) } 1' - | sed 's/\s/\t/g' - > "$sample".hetsv_calls_PBSV.bed```		
+> command line: grep -v '1|1' 20170109."$sample".sv_calls_PBSV.bed | awk '{ $3 = ( $5 == "<INS>" ? $2+1 : $3) } 1' - | sed 's/\s/\t/g' - > "$sample".hetsv_calls_PBSV.bed		
 ```
-3. Heterozygous SVs for each daughter were intersected with the SNP-ASE genes (genes identified by methods described above) to identify sets of SV-impacted genes to test for allele specific expression. The files “$sample".uniq.ASESNP.genes.txt contains the coordinates, gene IDs and gene names for ASE-SNP genes per sample identified by the SNP-ASE analysis above.
+3. Heterozygous SVs for each daughter are intersected with the SNP-ASE genes (genes identified by methods described above) to identify sets of SV-impacted genes to test for allele specific expression. The files “$sample".uniq.ASESNP.genes.txt contains the coordinates, gene IDs and gene names for ASE-SNP genes per sample identified by the SNP-ASE analysis above.
 ```
 > command line: bedtools intersect -wa -wb -a “$sample".uniq.ASESNP.genes.txt  -b “$sample”.PASS.Illumina.DELINS_heterozygous.bed > $sample.intersect.hetILL.ASESNP.genes.txt
-
 > command line: bedtools intersect -wa -wb -a "$sample".uniq.ASESNP.genes.txt -b "$sample".hetsv_calls_PBSV.bed > "$sample".intersect.hetPBSV.ASESNP.genes.txt
-```
-						 
-4. Phased RNA-seq reads were then sorted with samtools and duplicates filtered with Picard. 
+```						 
+4. Phased RNA-seq reads are then sorted with samtools and duplicates filtered with Picard. 
+
 ```
 > command line: samtools sort "$sample".h1.bam > "$sample".sort.h1.bam  samtools sort "$sample".h2.bam > "$sample".sort.h2.bam
-
 > command line: java -jar picard.jar MarkDuplicates INPUT="$sample".sort.h1.bam OUTPUT="$sample".filt.h1.bam M="$file".marked_dup_metrics.txt REMOVE_DUPLICATES=true VALIDATION_STRINGENCY=LENIENT
 ```
 
-5. Phased RNA-seq reads were counted across coordinate regions of SNP-ASE genes that were intersected by heterozygous SVs using BEDtools multicov. This produces a count for each bam file, where “$sample”.filt.head.h2.bam and “$sample”.filt.head.h2.bam are the bam files for filtered RNA-seq reads phased to haplotype 1 or haplotype 2 for each daughter sample. 
+5. Phased RNA-seq reads are counted across coordinate regions of SNP-ASE genes that are intersected by heterozygous SVs using BEDtools multicov. This produces a count for each bam file, where “$sample”.filt.head.h2.bam and “$sample”.filt.head.h2.bam are the bam files for filtered RNA-seq reads phased to haplotype 1 or haplotype 2 for each daughter sample. 
 ```
 > command line: bedtools multicov -bams “$sample”.filt.head.h1.bam “$sample”.filt.head.h2.bam  -bed “$sample”.intersect.hetILL.ASESNP.genes.txt > “$sample”.illumina.multicov.txt
-
 > command line: bedtools multicov -bams “$sample”.filt.head.h1.bam “$sample”.filt.head.h2.bam  -bed $sample.intersect.hetPBSV.ASESNP.genes.txt > “$sample”.PBSV.multicov.txt
 ```
 
-6. A binomial test was then applied using binom.test() in R. 
+6. A binomial test is then applied using binom.test() in R. 
 ```
 > R: binom.test(x, n, p = 0.5)
 ```
 Where x = single RNA-seq haplotype counts, n = total RNA-seq counts for both haplotypes, p = hypothesized probability of success.
 
-7. Multi-test correction was applied with p.adjust() in R.
+7. Multi-test correction is applied with p.adjust() in R.
 
 8. Output significant SVs exhibit an ASE affect with FDR adjusted p-value <= 0.05.
