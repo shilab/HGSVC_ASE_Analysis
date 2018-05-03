@@ -96,7 +96,7 @@ Demerger.py is a simple Python script to parse information from each sample's VC
 
 2. The heterozygous SVs from the Merged PacBio calls are extracted and formatted in a similar manner.
 ```
-> command line: python PBSV.adjust.py 20170109_"$sample".sv_calls.vcf  ## yields file called 20170109.”$sample".sv_calls_PBSV.bed
+> command line: python PBSV.adjust.py 20170109_"$sample".sv_calls.vcf    ## yields file called 20170109."$sample".sv_calls_PBSV.bed
 ```
 where PB.adjust.py is a Python script to parse information from each sample's VCF INFO column into a "chrom start end" postion format output file. 
 ```
@@ -104,7 +104,7 @@ where PB.adjust.py is a Python script to parse information from each sample's VC
 ```
 3. Heterozygous SVs for each daughter are intersected with the SNP-ASE genes (genes identified by methods described above) to identify sets of SV-impacted genes to test for allele specific expression. The files “$sample".uniq.ASESNP.genes.txt contains the coordinates, gene IDs and gene names for ASE-SNP genes per sample identified by the SNP-ASE analysis above.
 ```
-> command line: bedtools intersect -wa -wb -a "$sample".uniq.ASESNP.genes.txt  -b “$sample”.PASS.Illumina.DELINS_heterozygous.bed > $sample.intersect.hetILL.ASESNP.genes.txt
+> command line: bedtools intersect -wa -wb -a "$sample".uniq.ASESNP.genes.txt  -b "$sample".PASS.Illumina.DELINS_heterozygous.bed > $sample.intersect.hetILL.ASESNP.genes.txt
 > command line: bedtools intersect -wa -wb -a "$sample".uniq.ASESNP.genes.txt -b "$sample".hetsv_calls_PBSV.bed > "$sample".intersect.hetPBSV.ASESNP.genes.txt
 ```						 
 4. Phased RNA-seq reads are then sorted with samtools and duplicates filtered with Picard. 
